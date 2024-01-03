@@ -47,4 +47,54 @@ const useData = async (searchText='12') => {
     addLoading(false);
     
     
+}
+  // find the search item 
+  const searchField = () => {
+    const searchField = document.getElementById('search-field');
+    const searchText1 = searchField.value;
+    addLoading(true);
+    console.log(searchText1)
+    useData(searchText1);
+    
+    
   }
+  // // recap search bar
+  // const addMoreButton = () => {
+  //   const my2ndSearchBar = document.getElementById('my-2nd-search');
+  //   const searchText2 = my2ndSearchBar.value;
+  //   addLoading(true);
+  //   useData(searchText2);
+  // }
+  const addLoading = (isLoading) => {
+    const findLoadingBar = document.getElementById('loading-bar');
+    if (isLoading) {
+      findLoadingBar.classList.remove('hidden');
+    }
+    else {
+      findLoadingBar.classList.add('hidden');
+    }
+  }
+  const showDetails = async (id) => {
+    console.log('show details', id)
+    // find the data use dynamic
+    const response =await fetch(`https://openapi.programming-hero.com/api/phone/${id}`);
+    const data = await response.json();
+    // console.log(data);
+    showPhoneDetails(data);
+    
+  }
+  
+  const showPhoneDetails = (phone) => {
+    my_modal_5.showModal()
+    console.log(phone);
+    const image = document.getElementById('image-details');
+    image.innerHTML = `
+    <img src="${phone?.data?.image}" alt="" >
+    <p class="text-center">${phone?.data?.brand}</p>
+    <P class="text-center">${phone?.data?.mainFeatures?.storage}</P>
+    `
+    
+  }
+  
+  useData();
+  
